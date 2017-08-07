@@ -1,0 +1,22 @@
+body {
+  background: url('images/bg.jpg') no-repeat top left;
+  background-size: cover;
+}
+
+// logo
+#logo {
+  height: 40em;
+  width: 50em;
+
+  background: url('images/sintacs_got.png') no-repeat top left;
+  background-size: contain;
+
+  margin: 0 auto;
+}
+
+// login form
+#login {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
