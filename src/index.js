@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import mongoose from 'mongoose';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -11,11 +12,14 @@ const createWindow = () => {
     height: 600,
   });
 
+  // Maximize Window to fullscreen
+  mainWindow.maximize();
+
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -50,3 +54,32 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+// connect to DB
+mongoose.connect(require('./dbconfig.json').url);
+mongoose.Promise = global.Promise;
+
+// Event Collection Schema
+let Event = mongoose.model('EventName',
+  new mongoose.Schema({ id: String, score: Number }));
+
+
+// store the participant's ID and redirect him to the quiz
+let participant = {};
+ipcMain.on('login', (event, id)=> {
+    participant.id = id;
+    mainWindow.loadURL(`file://${__dirname}/quiz.html`);
+});
+
+// get participant's score and save it to DB
+ipcMain.on('score', (event, score) => {
+    participant.score = score;
+
+    new Event(participant).save(err => {
+      if (err) console.log(err);
+      else participant = {};
+    });
+});
+
+// Close the app
+ipcMain.on('quit', event => app.quit());
