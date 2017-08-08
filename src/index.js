@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import mongoose from 'mongoose';
+const path = require('path');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -10,6 +11,7 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: path.join(__dirname, 'images/icon.png')
   });
 
   // Maximize Window to fullscreen
@@ -77,7 +79,7 @@ ipcMain.on('score', (event, score) => {
 
     new Event(participant).save(err => {
       if (err) console.log(err);
-      else participant = {};
+      // else participant = {};
     });
 });
 

@@ -1,15 +1,31 @@
+@font-face {
+    font-family: got;
+    src: url('fonts/got.ttf');
+}
+
+html, body {
+  font-family: got;
+}
+
 body {
   background: url('images/bg.jpg') no-repeat top left;
-  background-size: cover;
+  overflow: hidden;
+}
+
+.container {
+  width: 70%;
 }
 
 // logo
 #logo {
-  height: 40em;
-  width: 50em;
+  height: 30em;
+  width: 40em;
 
   background: url('images/sintacs_got.png') no-repeat top left;
   background-size: contain;
+
+  position: relative;
+  top: -100px;
 
   margin: 0 auto;
 }
@@ -19,4 +35,19 @@ body {
   display: block;
   margin: 0 auto;
   text-align: center;
+}
+
+// rules panel
+#rules {
+  position: relative;
+  top: -200px;
+
+  background: rgba(0, 0, 0, 0.5);
+  border: 0;
+  color: #212121;
+}
+
+#login {
+  position: relative;
+  top: -150px;
 }
