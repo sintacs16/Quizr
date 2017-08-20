@@ -79,7 +79,6 @@ ipcMain.on('score', (event, score) => {
 
     new Event(participant).save(err => {
       if (err) console.log(err);
-      // else participant = {};
     });
 });
 
